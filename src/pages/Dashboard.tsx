@@ -14,6 +14,9 @@ import { DownloadIcon, UploadIcon } from "@radix-ui/react-icons"
 import User from "@/components/dashboard/content/User"
 import ExamQuestions from "@/components/dashboard/content/ExamQuestions"
 import ExamResult from "@/components/dashboard/content/ExamResult"
+import SettingsPage from "@/pages/Settings"
+import { useNavigate } from "react-router-dom"
+
 
 enum ContentPages {
   "default",
@@ -22,12 +25,18 @@ enum ContentPages {
   "uploadExam",
   "downloadExam",
   "settings",
+  "test"
 }
 
 export default function Dashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
   const [isSelected, setIsSelected] = useState<ContentPages>()
-  
+  const navigate = useNavigate();
+
+  const handleReload = () => {
+    window.location.reload();
+  };
+
   return (
     <div className="flex min-h-screen w-full">
       <aside
@@ -35,17 +44,17 @@ export default function Dashboard() {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="mb-6 flex items-center gap-2">
+        <div className="mb-6 flex items-center cursor-pointer gap-2" onClick={handleReload}>
           <MountainIcon className="h-6 w-6" />
           <span className="text-lg font-semibold">Admin Dashboard</span>
         </div>
         <nav className="flex flex-col gap-2">
-          <SideButton btnName="Test" icon={<SettingsIcon/>}/>
+          <SideButton onClick={()=>setIsSelected(ContentPages.test)} btnName="Test" icon={<SettingsIcon/>}/>
           <SideButton btnName="Dashboard" icon={<LayoutGridIcon className="h-5 w-5" />}/>
           <SideButton onClick={()=>setIsSelected(ContentPages.users)} btnName="Users" icon={<UsersIcon className="h-5 w-5" />}/>
           <SideButton onClick={()=>setIsSelected(ContentPages.uploadExam)} btnName="Upload Exam Questions" icon={<UploadIcon className="h-5 w-5" />}/>
           <SideButton onClick={()=>setIsSelected(ContentPages.downloadExam)} btnName="Download Exam Result" icon={<DownloadIcon className="h-5 w-5" />}/>
-          <SideButton btnName="Settings" icon={<SettingsIcon className="h-5 w-5" />}/>  
+          <SideButton onClick={()=>setIsSelected(ContentPages.settings)} btnName="Settings" icon={<SettingsIcon className="h-5 w-5" />}/>  
         </nav>
       </aside>
       <div className="flex flex-1 flex-col">
@@ -65,7 +74,9 @@ export default function Dashboard() {
         <main className="flex-1 p-4 md:p-6">
           {isSelected === ContentPages.users ? <User/> :
            isSelected === ContentPages.uploadExam ? <ExamQuestions/> : 
-           isSelected === ContentPages.downloadExam ? <ExamResult/> : null
+           isSelected === ContentPages.downloadExam ? <ExamResult/> : 
+           isSelected === ContentPages.settings ? <SettingsPage/> : 
+           isSelected === ContentPages.test ? <User/> : null
         }
         </main>
       </div>
