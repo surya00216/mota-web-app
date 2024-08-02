@@ -13,8 +13,7 @@ import { auth } from "@/firebase";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
-import { EyeIcon } from "lucide-react";
-import { EyeClosedIcon } from "@radix-ui/react-icons";
+import { EyeNoneIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 
 export function LoginForm() {
@@ -38,18 +37,16 @@ export function LoginForm() {
       setLoading(false)
     }
   };
+  
+  const toggleVisibility = () => {
+    setHidden(prev =>!prev)
 
-  const PasswordInput = () => {
-    const toggleVisibility = (e: React.FormEvent) => {
-      // e.preventDefault()
-      setHidden(prev =>!prev)
-    }
     return (
       <div className="">
-        <div className="">
-          <input value={password} onChange={(e)=>setPassword(e.target.value)} className="text-black" type={hidden ? "password" : 'text'} required/>
-          <button onClick={toggleVisibility}>
-            {hidden ? <EyeIcon/> : <EyeClosedIcon/>}
+        <div className="flex border rounded-md">
+          <input value={password} onChange={(e)=>setPassword(e.target.value)} type={ hidden ? "password" : 'text'} className="flex h-9 w-full rounded-md  bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50" />
+          <button className="mr-3" onClick={()=>toggleVisibility()}>
+            {hidden ? <EyeOpenIcon className="w-4 h-4"/> : <EyeNoneIcon className="w-4 h-4"/>}
           </button>
         </div>
       </div>
@@ -71,8 +68,12 @@ export function LoginForm() {
         </div>
         <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
-          {/* <PasswordInput/> */}
-          <Input onChange={(e)=>setPassword(e.target.value)} id="password" type="password" required />
+          <div className="flex border rounded-md">
+            <input onChange={(e)=>setPassword(e.target.value)} id="password" type={ hidden ? "password" : 'text'} className="flex h-9 w-full rounded-md  bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50" required />
+            <button className="mr-3" onClick={()=>toggleVisibility()}>
+              {hidden ? <EyeOpenIcon className="w-4 h-4"/> : <EyeNoneIcon className="w-4 h-4"/>}
+            </button>
+          </div>
         </div>
        {error && <div className="text-red-500">Invalid email id or password</div> }
       </CardContent>

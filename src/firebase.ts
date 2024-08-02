@@ -2,7 +2,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import 'firebase/storage'
 import { getStorage } from 'firebase/storage';
 
