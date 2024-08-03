@@ -14,6 +14,7 @@ import { useState } from "react";
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 import { EyeNoneIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+import toast from "react-hot-toast";
 
 
 export function LoginForm() {
@@ -28,59 +29,45 @@ export function LoginForm() {
     e.preventDefault();
     setLoading(true)
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password!);      // Redirect to the user's dashboard or protected content
-      console.log(userCredential)
-      console.log("Signin successfull")
-      navigate('/dashboard')
+      await signInWithEmailAndPassword(auth, email, password);
+      toast.success("Login Successfull",{position:"top-center"})
+      navigate('/')
     } catch (error:any) {
       setError(error.message);
       setLoading(false)
     }
   };
-  
-  const toggleVisibility = () => {
-    setHidden(prev =>!prev)
-
-    return (
-      <div className="">
-        <div className="flex border rounded-md">
-          <input value={password} onChange={(e)=>setPassword(e.target.value)} type={ hidden ? "password" : 'text'} className="flex h-9 w-full rounded-md  bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50" />
-          <button className="mr-3" onClick={()=>toggleVisibility()}>
-            {hidden ? <EyeOpenIcon className="w-4 h-4"/> : <EyeNoneIcon className="w-4 h-4"/>}
-          </button>
-        </div>
-      </div>
-    )
-  }
 
   return (
-    <Card className="w-full max-w-sm">
-      <CardHeader>
-        <CardTitle className="text-2xl">Login</CardTitle>
-        <CardDescription>
-          Enter your email below to login to your account.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
-          <Input onChange={(e)=>setEmail(e.target.value)} id="email" type="email" placeholder="m@example.com" required />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="password">Password</Label>
-          <div className="flex border rounded-md">
-            <input onChange={(e)=>setPassword(e.target.value)} id="password" type={ hidden ? "password" : 'text'} className="flex h-9 w-full rounded-md  bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50" required />
-            <button className="mr-3" onClick={()=>toggleVisibility()}>
-              {hidden ? <EyeOpenIcon className="w-4 h-4"/> : <EyeNoneIcon className="w-4 h-4"/>}
-            </button>
-          </div>
-        </div>
-       {error && <div className="text-red-500">Invalid email id or password</div> }
-      </CardContent>
-      <CardFooter>
-        <Button onClick={handleSignIn} className="w-full" disabled={loading}>Sign in</Button>
-      </CardFooter>
-    </Card>
+      <form onSubmit={handleSignIn}>      
+        <Card className="w-96 shadow-lg ">
+          <CardHeader>
+            <CardTitle className="text-2xl">Login</CardTitle>
+            <CardDescription>
+              Enter your email to Login into MOTA Admin Panel
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input onChange={(e)=>setEmail(e.target.value)} id="email" type="email" placeholder="johndoe@example.com" required />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <div className="flex border rounded-md">
+                <input onChange={(e)=>setPassword(e.target.value)} id="password" type={ hidden ? "password" : 'text'} className="flex h-9 w-full rounded-md  bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50" required />
+                <div className="mr-3 cursor-pointer flex justify-center items-center" onClick={()=>setHidden(!hidden)}>
+                  {hidden ? <EyeOpenIcon className="w-4 h-4"/> : <EyeNoneIcon className="w-4 h-4"/>}
+                </div>
+              </div>
+            </div>
+          {error && <div className="text-red-500">Invalid email id or password</div> }
+          </CardContent>
+          <CardFooter>
+            <Button type="submit" className="w-full" disabled={loading}>Sign in</Button>
+          </CardFooter>
+        </Card>
+      </form>
   )
 }
 
