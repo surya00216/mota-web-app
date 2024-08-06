@@ -1,8 +1,3 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/I6gFkpU6GS4
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
 import { Button } from "@/components/ui/button"
 
 import { useState } from "react"
@@ -16,6 +11,7 @@ import ExamQuestions from "@/components/dashboard/content/ExamQuestions"
 import ExamResult from "@/components/dashboard/content/ExamResult"
 import SettingsPage from "@/pages/Settings"
 import { useNavigate } from "react-router-dom"
+import App from "./Test"
 
 
 enum ContentPages {
@@ -76,7 +72,7 @@ export default function Dashboard() {
            isSelected === ContentPages.uploadExam ? <ExamQuestions/> : 
            isSelected === ContentPages.downloadExam ? <ExamResult/> : 
            isSelected === ContentPages.settings ? <SettingsPage/> : 
-           isSelected === ContentPages.test ? <User/> : null
+           isSelected === ContentPages.test ? <App/> : null
         }
         </main>
       </div>
