@@ -33,6 +33,7 @@ export function LoginForm() {
       toast.success("Login Successfull",{position:"top-center"})
       navigate('/')
     } catch (error:any) {
+      toast.error("Invalid Email or Password")
       setError(error.message);
       setLoading(false)
     }
@@ -40,7 +41,7 @@ export function LoginForm() {
 
   return (
       <form onSubmit={handleSignIn}>      
-        <Card className="w-96 shadow-lg ">
+        <Card className="w-96 border-none shadow-lg ">
           <CardHeader>
             <CardTitle className="text-2xl">Login</CardTitle>
             <CardDescription>

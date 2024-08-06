@@ -8,9 +8,9 @@ const ExamResult = () => {
     console.log("File Downloaded")
   }
   return (
-    <div className="flex flex-col w-1/2 ">
+    <div className="flex flex-col w-1/2 ">                
       <form action="">
-        <Dropdown 
+        {/* <Dropdown 
           question={"Which year of Degree or Masters?"} 
           options={["First Year","Second Year","Third Year","Fourth Year"]}
         />
@@ -25,7 +25,7 @@ const ExamResult = () => {
         <Dropdown 
           question={"Which Semester of Degree or Masters?"} 
           options={["Semester I","Semester II","Semester III","Semester IV","Semester V","Semester VI","Semester VII","Semester VIII",]}
-        />
+        /> */}
         <ExamInput 
             question={"Which Academic Year of Degree or Master?(2023 to 2024 will be '2324')"} 
             type={"number"} 

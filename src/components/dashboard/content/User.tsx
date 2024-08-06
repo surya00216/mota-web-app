@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { storage } from '@/firebase';
 import { ref, getDownloadURL } from 'firebase/storage';
-import { firestore } from '@/firebase';
+import { firestore } from "@/firebase";
 import { doc, setDoc, Timestamp } from 'firebase/firestore';
 import { useState, useRef } from 'react';
 import readXlsxFile from 'read-excel-file';
